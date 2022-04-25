@@ -22,7 +22,7 @@ Warning: TTY mode requires /dev/tty to be read/writable.
     Created project in /opt/app
     > @php -r "file_exists('.env') || copy('.env.example', '.env');"
     Loading composer repositories with package informatio
-    ~~ 略 ~~
+    ~~ 省略 ~~
 ```
 
 - 作成したプロジェクトディレクトリへ移動し、コンテナを立ち上げる
@@ -54,13 +54,7 @@ c8fde95d500d   getmeili/meilisearch:latest   "tini -- /bin/sh -c …"   About a 
 
 [http://localhost/](http://localhost/)へアクセス、laravelの初期画面
 
-```
-
 ![laravel初期画面](./start.png)
-```
-
-
-
 
 # ログイン・ログアウト機能
 
