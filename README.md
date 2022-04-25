@@ -31,6 +31,7 @@ Warning: TTY mode requires /dev/tty to be read/writable.
 
 - dockerコマンドでimage,container確認
 ```docker image ls```
+
 ```
 REPOSITORY                   TAG       IMAGE ID       CREATED         SIZE
 selenium/standalone-chrome   latest    66e5439a061b   2 weeks ago     1.19GB
@@ -40,7 +41,9 @@ mysql/mysql-server           8.0       434c35b82b08   3 months ago    417MB
 laravelsail/php81-composer   latest    d109f96a6d48   4 months ago    531MB
 mailhog/mailhog              latest    4de68494cd0d   20 months ago   392MB
 ```
+
 ```docker container ps -a```
+
 ```
 app % docker container ps -a
 CONTAINER ID   IMAGE                         COMMAND                  CREATED              STATUS                        PORTS                                            NAMES
@@ -55,6 +58,38 @@ c8fde95d500d   getmeili/meilisearch:latest   "tini -- /bin/sh -c …"   About a 
 [http://localhost/](http://localhost/)へアクセス、laravelの初期画面
 
 ![laravel初期画面](./start.png)
+
+## sailコマンドをailas設定
+
+```vendor/bin/sail```を```sail```に置き換える
+
+```alias sail='[ -f sail ] && bash sail || bash vendor/bin/sail'```を追記する
+
+```
+vim ~/.zshrc
+
+# sail commandのalias
+alias sail='[ -f sail ] && bash sail || bash vendor/bin/sail
+```
+
+作成したディレクトリにてcommnad実行、反映
+```
+source ~/.zshrc
+```
+
+###設定後、使用例
+
+- コンテナ立ち上げる
+  ```sail up```
+- detachedモード
+  ```sail up -d```
+- コンテナ停止
+  ```sail down```
+- コンテナへ接続
+  ```sail shell```
+- mysqlへlogin
+  ``````
+
 
 # ログイン・ログアウト機能
 
