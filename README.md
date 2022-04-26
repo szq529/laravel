@@ -57,7 +57,7 @@ c8fde95d500d   getmeili/meilisearch:latest   "tini -- /bin/sh -c …"   About a 
 
 [http://localhost/](http://localhost/)へアクセス、laravelの初期画面
 
-![laravel初期画面](./start.png)
+![laravel初期画面](./laravel_start.png)
 
 ## sailコマンドをailas設定
 
