@@ -77,7 +77,7 @@ alias sail='[ -f sail ] && bash sail || bash vendor/bin/sail
 source ~/.zshrc
 ```
 
-###設定後、使用例
+### 設定後、使用例
 
 - コンテナ立ち上げる
   ```sail up```
@@ -88,7 +88,7 @@ source ~/.zshrc
 - コンテナへ接続
   ```sail shell```
 - mysqlへlogin
-  ``````
+- 
 
 
 # ログイン・ログアウト機能
@@ -96,9 +96,6 @@ source ~/.zshrc
 - 対象ファイル
 1. ```app/Providers/AppServiceProvider.php```
 2. ```resources/views/components/header.blade.php```
-
-- httpsの設定
-1. 
 
 # cssのファイル作成・反映
 - cssファイルの場所
