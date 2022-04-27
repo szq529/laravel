@@ -1,71 +1,32 @@
 server {
-  listen 80;
-  // root /var/www/{Laravelプロジェクト名}/public;
-  root /var/www/laravel/public;
+    listen 80;
+    listen [::]:80;
+    server_name laravel_saki.com;
+    root /srv/app/public;
 
-  add_header X-Frame-Options "SAMEORIGIN";
-  add_header X-XSS-Protection "1; mode=block";
-  add_header X-Content-Type-Options "nosniff";
+    add_header X-Frame-Options "SAMEORIGIN";
+    add_header X-Content-Type-Options "nosniff";
 
-  index index.php;
-  charset utf-8;
+    index index.php;
 
-  location / {
-    try_files $uri $uri/ /index.php?$query_string;
-  }
+    charset utf-8;
 
-  location = /favicon.ico { access_log off; log_not_found off; }
-  location = /robots.txt  { access_log off; log_not_found off; }
+    location / {
+        try_files $uri $uri/ /index.php?$query_string;
+    }
 
-  error_page 404 /index.php;
+    location = /favicon.ico { access_log off; log_not_found off; }
+    location = /robots.txt  { access_log off; log_not_found off; }
 
-  // phpファイルはfastcgi(=php-fpm)で処理するよって書いてある
-  location ~ \.php$ {
-    try_files $uri =404;
-    fastcgi_split_path_info ^(.+\.php)(/.+)$;
-    // ホスト名(=コンテナ名):ポート
-    fastcgi_pass php:9000;
-    fastcgi_index index.php;
-    include fastcgi_params;
-      fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
-      fastcgi_param PATH_INFO $fastcgi_path_info;
-  }
-  location ~ /\.(?!well-known).* {
-      deny all;
-  }
- server {
-  listen 80;
-  // root /var/www/{Laravelプロジェクト名}/public;
-  root /var/www/laravel/public;
+    error_page 404 /index.php;
 
-  add_header X-Frame-Options "SAMEORIGIN";
-  add_header X-XSS-Protection "1; mode=block";
-  add_header X-Content-Type-Options "nosniff";
+    location ~ \.php$ {
+        fastcgi_pass unix:/var/run/php/php7.4-fpm.sock;
+        fastcgi_param SCRIPT_FILENAME $realpath_root$fastcgi_script_name;
+        include fastcgi_params;
+    }
 
-  index index.php;
-  charset utf-8;
-
-  location / {
-    try_files $uri $uri/ /index.php?$query_string;
-  }
-
-  location = /favicon.ico { access_log off; log_not_found off; }
-  location = /robots.txt  { access_log off; log_not_found off; }
-
-  error_page 404 /index.php;
-
-  // phpファイルはfastcgi(=php-fpm)で処理するよって書いてある
-  location ~ \.php$ {
-    try_files $uri =404;
-    fastcgi_split_path_info ^(.+\.php)(/.+)$;
-    // ホスト名(=コンテナ名):ポート
-    fastcgi_pass php:9000;
-    fastcgi_index index.php;
-    include fastcgi_params;
-      fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
-      fastcgi_param PATH_INFO $fastcgi_path_info;
-  }
-  location ~ /\.(?!well-known).* {
-      deny all;
-  }
+    location ~ /\.(?!well-known).* {
+        deny all;
+    }
 }

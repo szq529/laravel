@@ -1,7 +1,7 @@
 # Docker + laravel + nginx + mysplでローカル環境構築
 
-[参考URL](https://www.ritolab.com/entry/217)
-taminalにて
+[参考URL](https://www.ritolab.com/entry/217)  
+taminalにて  
 ```curl -s "https://laravel.build/app" | bash```
 
 ```laravel % curl -s "https://laravel.build/app" | bash```
@@ -29,7 +29,7 @@ Warning: TTY mode requires /dev/tty to be read/writable.
 ```cd app```
 ```./vendor/bin/sail up```
 
-- dockerコマンドでimage,container確認
+- dockerコマンドでimage,container確認  
 ```docker image ls```
 
 ```
@@ -77,6 +77,27 @@ alias sail='[ -f sail ] && bash sail || bash vendor/bin/sail
 source ~/.zshrc
 ```
 
+### nginxの追加
+
+[参考](https://laravel.com/docs/8.x/deployment#nginx)
+```vim dockdre-compose.yml```
+```
+    nginx:
+        image: nginx
+        container_name: nginx
+        ports:
+            - 8080:80
+        volumes:
+            - ./web:/var/www
+            - ./etc/nginx/default.conf/nginx.conf:/etc/nginx/conf.d/default.conf
+        depends_on:
+            - php
+```
+
+```vim etc/nginx/conf.d/default.conf/inidex.php```
+
+
+
 ### 設定後、使用例
 
 - コンテナ立ち上げる
@@ -87,8 +108,8 @@ source ~/.zshrc
   ```sail down```
 - コンテナへ接続
   ```sail shell```
-- mysqlへlogin
-- 
+- mysqlへlogin(初回rootユーザー)
+  ```sail mysql -uroot```
 
 
 # ログイン・ログアウト機能
