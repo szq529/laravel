@@ -4,6 +4,8 @@
 taminalにて  
 ```curl -s "https://laravel.build/app" | bash```
 
+passwordを求められる
+
 ```laravel % curl -s "https://laravel.build/app" | bash```
 
 ``` _                               _
