@@ -30,8 +30,9 @@ Warning: TTY mode requires /dev/tty to be read/writable.
 - 作成したプロジェクトディレクトリへ移動し、コンテナを立ち上げる
 ```cd app```
 ```./vendor/bin/sail up```
+サーバーが立ち上がる
 
-- dockerコマンドでimage,container確認  
+<!-- - dockerコマンドでimage,container確認  
 ```docker image ls```
 
 ```
@@ -59,9 +60,9 @@ c8fde95d500d   getmeili/meilisearch:latest   "tini -- /bin/sh -c …"   About a 
 
 [http://localhost/](http://localhost/)へアクセス、laravelの初期画面
 
-![laravel初期画面](./laravel_start.png)
+![laravel初期画面](./laravel_start.png) -->
 
-## sailコマンドをailas設定
+<!-- ## sailコマンドをailas設定
 
 ```vendor/bin/sail```を```sail```に置き換える
 
@@ -97,6 +98,22 @@ source ~/.zshrc
 ```
 
 ```vim etc/nginx/conf.d/default.conf/inidex.php```
+ -->
+
+### ```docker-compose.yml```ファイルの作成
+
+```docker-compose.yml
+version: "3.9"
+
+services:
+  laravel-1:    // サービス名
+    build:
+      context: .
+      dockerfile: ./docker/app/Dockerfile
+    volumes:
+      - ./src/:/app
+
+```
 
 
 
