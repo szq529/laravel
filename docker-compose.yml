@@ -2,7 +2,7 @@ version: "3.9"
 
 services:
     # サービス名
-    laravel-1:
+    app:
         build:
             context: .
             dockerfile: ./app/Dockerfile
@@ -11,10 +11,10 @@ services:
     web:
         build:
             context: .
-            dockerfile: ./app/web/Dockerfile
+            dockerfile: ./docker/web/Dockerfile
         ports:
             - 8080:80
         depends_on:
-            - laravel-1
+            - app
         volumes:
             - ./src/:/app
