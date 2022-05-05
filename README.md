@@ -1,5 +1,5 @@
 # Docker + laravel + nginx + mysplでローカル環境構築
-
+<!-- 
 [参考URL](https://www.ritolab.com/entry/217)  
 taminalにて  
 ```curl -s "https://laravel.build/app" | bash```
@@ -30,7 +30,7 @@ Warning: TTY mode requires /dev/tty to be read/writable.
 - 作成したプロジェクトディレクトリへ移動し、コンテナを立ち上げる
 ```cd app```
 ```./vendor/bin/sail up```
-サーバーが立ち上がる
+サーバーが立ち上がる -->
 
 <!-- - dockerコマンドでimage,container確認  
 ```docker image ls```
@@ -106,14 +106,133 @@ source ~/.zshrc
 version: "3.9"
 
 services:
-  laravel-1:    // サービス名
-    build:
-      context: .
-      dockerfile: ./docker/app/Dockerfile
-    volumes:
-      - ./src/:/app
+    app:
+        # php コンテナ
+        build:
+            context: .
+            dockerfile: ./app/Dockerfile
+        volumes:
+            - ./src/:/app
+    web:
+        # nginx コンテナ
+        build:
+            context: .
+            dockerfile: ./docker/web/Dockerfile
+        ports:
+            - 8080:80
+        depends_on:
+            - app
+        volumes:
+            - ./src/:/app
+    db:
+        # mysql コンテナ
+        build:
+            context: .
+            dockerfile: ./docker/db/Dockerfile
+        ports:
+            - 3306:3306
+        environment:
+            MYSQL_DATABASE: database
+            MYSQL_USER: user
+            MYSQL_PASSWORD: password
+            MYSQL_ROOT_PASSWORD: password
+            TZ: 'Asia/Tokyo'
+        volumes:
+            - mysql-volume:/var/lib/mysql
+volumes:
+    mysql-volume:
+```
+
+### 各Dockerfile
+
+#### app(php)
+```
+FROM php:8.0-fpm
+
+ENV TZ Asia/Tokyo
+
+RUN apt-get update && \
+    apt-get install -y git unzip libzip-dev libicu-dev libonig-dev && \
+    docker-php-ext-install intl pdo_mysql zip bcmath
+
+COPY ./app/php.ini /usr/local/etc/php/php.ini
+
+COPY --from=composer:2.0 /usr/bin/composer /usr/bin/composer
+
+WORKDIR /app
+```
+
+#### web(nginx)
+```
+FROM nginx:1.20-alpine
+
+ENV TZ Asia/Tokyo
+
+COPY ./docker/web/default.conf /etc/nginx/conf.d/default.conf
+```
+
+#### db(mysql)
+```
+FROM mysql:8.0
+
+COPY ./docker/db/my.conf /etc/my.conf
+```
+
+- 3つのコンテナが作成される
+```docker-compose up -d --build```
 
 ```
+laravel % docker container ps -a
+CONTAINER ID   IMAGE         COMMAND                  CREATED             STATUS             PORTS                               NAMES
+b8e098958ac0   laravel_db    "docker-entrypoint.s…"   9 seconds ago       Up 7 seconds       0.0.0.0:3306->3306/tcp, 33060/tcp   laravel-db-1
+c569c60a1811   laravel_web   "/docker-entrypoint.…"   About an hour ago   Up About an hour   0.0.0.0:8080->80/tcp                laravel-web-1
+06ad6812158d   laravel_app   "docker-php-entrypoi…"   About an hour ago   Up About an hour   9000/tcp                            laravel-app-1
+```
+
+### mysql接続確認
+
+```
+// dbコンテナに入る
+laravel % docker-compose exec db bash
+
+root@b8e098958ac0:/# mysql -u root -p
+// この段階では、ymlファイル内のpassword入力
+Enter password:
+
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 15
+Server version: 8.0.29 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2022, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql>
+```
+できたああああああ！
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
