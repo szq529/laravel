@@ -369,7 +369,7 @@ Route::get('/index', 'App\Http\Controllers\HelloController@index');
 
 ```resources/views```内に```index.blade.php```を作成
 
-```
+``` 
 @extends('common.layout')
 
 @section('index')
