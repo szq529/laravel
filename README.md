@@ -268,7 +268,7 @@ mysql>
 ```
 [参考](https://qiita.com/hinako_n/items/f15646ea548bcdc8ac6c)
 
-### 設定後、使用例
+<!-- ### 設定後、使用例
 
 - コンテナ立ち上げる
   ```sail up```
@@ -381,4 +381,4 @@ Route::get('/index', 'App\Http\Controllers\HelloController@index');
 ```
 
 参考:https://qiita.com/yukibe/items/7bab0d596ae9a0930f18
-
+ -->
