@@ -192,7 +192,7 @@ c569c60a1811   laravel_web   "/docker-entrypoint.…"   About an hour ago   Up A
 ### mysql接続確認
 
 ```
-// dbコンテナに入る
+//  dbコンテナに入る
 laravel % docker-compose exec db bash
 
 root@b8e098958ac0:/# mysql -u root -p
@@ -213,28 +213,60 @@ Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
 
 mysql>
 ```
-できたああああああ！
+<!-- できたああああああ！ -->
 
+### appコンテナからdbコンテナへ接続
 
+laravel installでできたsrc/.envファイルにymlファイルに定義した内容を指定
+DB_HOSTにはMySQLコンテナのサービス名
 
+```src/.env
+DB_CONNECTION=mysql
+DB_HOST=db
+DB_PORT=3306
+DB_DATABASE=database
+DB_USERNAME=root
+DB_PASSWORD=password
+```
 
+マイグレーションを実行して、接続確認
+```
+laravel % docker-compose exec app bash
+root@0b8668e3911e:/app# php artisan migrate
+Migration table created successfully.
+Migrating: 2014_10_12_000000_create_users_table
+Migrated:  2014_10_12_000000_create_users_table (63.47ms)
+Migrating: 2014_10_12_100000_create_password_resets_table
+Migrated:  2014_10_12_100000_create_password_resets_table (51.16ms)
+Migrating: 2019_08_19_000000_create_failed_jobs_table
+Migrated:  2019_08_19_000000_create_failed_jobs_table (49.98ms)
+Migrating: 2019_12_14_000001_create_personal_access_tokens_table
+Migrated:  2019_12_14_000001_create_personal_access_tokens_table (59.13ms)
+root@0b8668e3911e:/app#
+```
 
+```
+root@b8e098958ac0:/# mysql -u root -p
+mysql> use database;
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
 
+Database changed
+mysql> show tables;
++------------------------+
+| Tables_in_database     |
++------------------------+
+| failed_jobs            |
+| migrations             |
+| password_resets        |
+| personal_access_tokens |
+| users                  |
++------------------------+
+5 rows in set (0.00 sec)
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+mysql>
+```
+[参考](https://qiita.com/hinako_n/items/f15646ea548bcdc8ac6c)
 
 ### 設定後、使用例
 
