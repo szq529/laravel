@@ -34,5 +34,17 @@ services:
             TZ: 'Asia/Tokyo'
         volumes:
             - mysql-volume:/var/lib/mysql
+    phpmyadmin:
+        # Docker Hubからイメージをダウンロード
+        image: phpmyadmin/phpmyadmin
+        # コンテナと他のサービスを繋げる
+        links:
+            - db
+        ports:
+            - 8888:80
+        # セッション情報をボリュームに設定して永続化
+        volumes:
+            - ./docker/phpmyadmin/sessions:/sessions
+
 volumes:
     mysql-volume:

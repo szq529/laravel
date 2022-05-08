@@ -280,7 +280,139 @@ mysql>
   ```sail shell```
 - mysqlへlogin(初回rootユーザー)
   ```sail mysql -uroot```
+ -->
 
+### laravel uiライブラリのインストール
+
+srcディレクトリにて
+```
+laravel % composer require laravel/ui
+Info from https://repo.packagist.org: #StandWithUkraine
+Using version ^3.4 for laravel/ui
+./composer.json has been created
+Running composer update laravel/ui
+Loading composer repositories with package information
+Info from https://repo.packagist.org: #StandWithUkraine
+Updating dependencies
+Lock file operations: 35 installs, 0 updates, 0 removals
+  - Locking doctrine/inflector (2.0.4)
+  - Locking doctrine/lexer (1.2.3)
+  - Locking egulias/email-validator (3.1.2)
+
+<!-- 略 -->
+
+23 package suggestions were added by new dependencies, use `composer suggest` to see details.
+Generating autoload files
+22 packages you are using are looking for funding.
+Use the `composer fund` command to find out more!
+```
+
+```
+src % composer require laravel/ui
+Info from https://repo.packagist.org: #StandWithUkraine
+Using version ^3.4 for laravel/ui
+./composer.json has been updated
+Running composer update laravel/ui
+Loading composer repositories with package information
+Info from https://repo.packagist.org: #StandWithUkraine
+Updating dependencies
+Lock file operations: 1 install, 0 updates, 0 removals
+  - Locking laravel/ui (v3.4.5)
+
+~~~~~~~略~~~~~~~~
+
+Discovered Package: laravel/ui
+Discovered Package: nesbot/carbon
+Discovered Package: nunomaduro/collision
+Package manifest generated successfully.
+77 packages you are using are looking for funding.
+Use the `composer fund` command to find out more!
+> @php artisan vendor:publish --tag=laravel-assets --ansi --force
+No publishable resources for tag [laravel-assets].
+Publishing complete.
+```
+
+```
+[saki-pro💻@Saki 05/08 21:41]+[mcv]
+src % php artisan ui bootstrap --auth
+Bootstrap scaffolding installed successfully.
+Please run "npm install && npm run dev" to compile your fresh scaffolding.
+Authentication scaffolding generated successfully.
+```
+
+```npm install && npm run dev```でnot found
+
+#### node install
+
+[参考](https://qiita.com/sugasaki/items/ad4d5d88965057840a04)
+
+```
+brew install nodebrew
+nodebrew -v
+mkdir -p ~/.nodebrew/src
+nodebrew install-binary latest
+```
+```
+src % nodebrew install-binary latest
+Fetching: https://nodejs.org/dist/v18.1.0/node-v18.1.0-darwin-x64.tar.gz
+
+src % nodebrew list
+v16.9.1
+v16.14.2
+v18.1.0
+
+current: v16.14.2
+```
+
+- 再度installコマンド
+
+```
+src % npm install && npm run dev
+⸨########⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⸩ ⠹ idealTree:esrecurse: timing idealTree:node_modules/esrecurse Completed in 3ms
+~~~~~~~~~~~~~
+
+> dev
+> npm run development
+
+
+> development
+> mix
+
+Additional dependencies must be installed. This will only take a moment.
+
+Running: npm install resolve-url-loader@^5.0.0 --save-dev --legacy-peer-deps
+
+Finished. Please run Mix again.
+
+```
+
+Running:の箇所のコマンドを実行
+
+```
+npm install resolve-url-loader@^5.0.0 --save-dev --legacy-peer-deps
+```
+
+```npm run dev```
+
+```
+
+~~~~~~~略~~~~~~~~
+✔ Compiled Successfully in 10506ms
+┌───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┬──────────┐
+│                                                                                                                                                              File │ Size     │
+├───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┼──────────┤
+│                                                                                                                                                        /js/app.js │ 2.23 MiB │
+│                                                                                                                                                       css/app.css │ 202 KiB  │
+└───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┴──────────┘
+1 WARNING in child compilations (Use 'stats.children: true' resp. '--stats-children' for more details)
+webpack compiled with 1 warning
+```
+
+
+
+
+
+<!-- 
 
 # ログイン・ログアウト機能
 
@@ -311,7 +443,6 @@ body{
 ```
 <link rel="stylesheet" href="{{ asset('css/style.css') }}">  
 ```
-
 
 # コントローラー作成
 
