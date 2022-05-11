@@ -1,7 +1,4 @@
 <?php
-
-use Illuminate\Support\Facades\Route;
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -13,9 +10,21 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\SampleController;
+use App\Http\Controllers\HelloController;
+
 Route::get('/', function () {
     return view('welcome');
 });
+
+// ルートパラメータを設定する
+// コントローラーでパラメータを取得
+Route::get('sample/{noname}/{pass?}', [SampleController::class, 'index']);
+
+Route::get('hello', [HelloController::class, 'index']);
+Route::get('hello/other', [HelloController::class, 'other']);
 
 Auth::routes();
 

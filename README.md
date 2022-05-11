@@ -1,106 +1,6 @@
 # Docker + laravel + nginx + mysplでローカル環境構築
-<!-- 
-[参考URL](https://www.ritolab.com/entry/217)  
-taminalにて  
-```curl -s "https://laravel.build/app" | bash```
 
-passwordを求められる
-
-```laravel % curl -s "https://laravel.build/app" | bash```
-
-``` _                               _
-| |                             | |
-| |     __ _ _ __ __ ___   _____| |
-| |    / _` | '__/ _` \ \ / / _ \ |
-| |___| (_| | | | (_| |\ V /  __/ |
-|______\__,_|_|  \__,_| \_/ \___|_|
-
-Warning: TTY mode requires /dev/tty to be read/writable.
-    Creating a "laravel/laravel" project at "./app"
-    Info from https://repo.packagist.org: #StandWithUkraine
-    Installing laravel/laravel (v9.1.5)
-      - Downloading laravel/laravel (v9.1.5)
-      - Installing laravel/laravel (v9.1.5): Extracting archive
-    Created project in /opt/app
-    > @php -r "file_exists('.env') || copy('.env.example', '.env');"
-    Loading composer repositories with package informatio
-    ~~ 省略 ~~
-```
-
-- 作成したプロジェクトディレクトリへ移動し、コンテナを立ち上げる
-```cd app```
-```./vendor/bin/sail up```
-サーバーが立ち上がる -->
-
-<!-- - dockerコマンドでimage,container確認  
-```docker image ls```
-
-```
-REPOSITORY                   TAG       IMAGE ID       CREATED         SIZE
-selenium/standalone-chrome   latest    66e5439a061b   2 weeks ago     1.19GB
-redis                        alpine    34e1dc356a22   2 weeks ago     32.4MB
-getmeili/meilisearch         latest    8c2830b31856   5 weeks ago     64.5MB
-mysql/mysql-server           8.0       434c35b82b08   3 months ago    417MB
-laravelsail/php81-composer   latest    d109f96a6d48   4 months ago    531MB
-mailhog/mailhog              latest    4de68494cd0d   20 months ago   392MB
-```
-
-```docker container ps -a```
-
-```
-app % docker container ps -a
-CONTAINER ID   IMAGE                         COMMAND                  CREATED              STATUS                        PORTS                                            NAMES
-5e5cfaa90ddd   sail-8.1/app                  "start-container"        About a minute ago   Up About a minute             0.0.0.0:80->80/tcp, 8000/tcp                     app-laravel.test-1
-002d20d64067   selenium/standalone-chrome    "/opt/bin/entry_poin…"   About a minute ago   Up About a minute             4444/tcp, 5900/tcp                               app-selenium-1
-572d136df265   mailhog/mailhog:latest        "MailHog"                About a minute ago   Up About a minute             0.0.0.0:1025->1025/tcp, 0.0.0.0:8025->8025/tcp   app-mailhog-1
-c8fde95d500d   getmeili/meilisearch:latest   "tini -- /bin/sh -c …"   About a minute ago   Up About a minute (healthy)   0.0.0.0:7700->7700/tcp                           app-meilisearch-1
-7069ec58329c   mysql/mysql-server:8.0        "/entrypoint.sh mysq…"   About a minute ago   Up About a minute (healthy)   0.0.0.0:3306->3306/tcp, 33060-33061/tcp          app-mysql-1
-03ad23543cb3   redis:alpine                  "docker-entrypoint.s…"   About a minute ago   Up About a minute (healthy)   0.0.0.0:6379->6379/tcp                           app-redis-1
-```
-
-[http://localhost/](http://localhost/)へアクセス、laravelの初期画面
-
-![laravel初期画面](./laravel_start.png) -->
-
-<!-- ## sailコマンドをailas設定
-
-```vendor/bin/sail```を```sail```に置き換える
-
-```alias sail='[ -f sail ] && bash sail || bash vendor/bin/sail'```を追記する
-
-```
-vim ~/.zshrc
-
-# sail commandのalias
-alias sail='[ -f sail ] && bash sail || bash vendor/bin/sail
-```
-
-作成したディレクトリにてcommnad実行、反映
-```
-source ~/.zshrc
-```
-
-### nginxの追加
-
-[参考](https://laravel.com/docs/8.x/deployment#nginx)
-```vim dockdre-compose.yml```
-```
-    nginx:
-        image: nginx
-        container_name: nginx
-        ports:
-            - 8080:80
-        volumes:
-            - ./web:/var/www
-            - ./etc/nginx/default.conf/nginx.conf:/etc/nginx/conf.d/default.conf
-        depends_on:
-            - php
-```
-
-```vim etc/nginx/conf.d/default.conf/inidex.php```
- -->
-
-### ```docker-compose.yml```ファイルの作成
+## ```docker-compose.yml```ファイルの作成
 
 ```docker-compose.yml
 version: "3.9"
@@ -146,9 +46,9 @@ volumes:
 ### 各Dockerfile
 
 #### app(php)
-```
-FROM php:8.0-fpm
 
+```FROM php:8.0-fpm
+FROM php:8.0-fpm
 ENV TZ Asia/Tokyo
 
 RUN apt-get update && \
@@ -163,7 +63,8 @@ WORKDIR /app
 ```
 
 #### web(nginx)
-```
+
+```FROM nginx:1.20-alpine
 FROM nginx:1.20-alpine
 
 ENV TZ Asia/Tokyo
@@ -172,7 +73,8 @@ COPY ./docker/web/default.conf /etc/nginx/conf.d/default.conf
 ```
 
 #### db(mysql)
-```
+
+```FROM mysql:8.0
 FROM mysql:8.0
 
 COPY ./docker/db/my.conf /etc/my.conf
@@ -181,7 +83,7 @@ COPY ./docker/db/my.conf /etc/my.conf
 - 3つのコンテナが作成される
 ```docker-compose up -d --build```
 
-```
+```laravel % docker container ps -a
 laravel % docker container ps -a
 CONTAINER ID   IMAGE         COMMAND                  CREATED             STATUS             PORTS                               NAMES
 b8e098958ac0   laravel_db    "docker-entrypoint.s…"   9 seconds ago       Up 7 seconds       0.0.0.0:3306->3306/tcp, 33060/tcp   laravel-db-1
@@ -191,8 +93,7 @@ c569c60a1811   laravel_web   "/docker-entrypoint.…"   About an hour ago   Up A
 
 ### mysql接続確認
 
-```
-//  dbコンテナに入る
+```//  dbコンテナに入る
 laravel % docker-compose exec db bash
 
 root@b8e098958ac0:/# mysql -u root -p
@@ -230,8 +131,8 @@ DB_PASSWORD=password
 ```
 
 マイグレーションを実行して、接続確認
-```
-laravel % docker-compose exec app bash
+
+```laravel % docker-compose exec app bash
 root@0b8668e3911e:/app# php artisan migrate
 Migration table created successfully.
 Migrating: 2014_10_12_000000_create_users_table
@@ -245,8 +146,7 @@ Migrated:  2019_12_14_000001_create_personal_access_tokens_table (59.13ms)
 root@0b8668e3911e:/app#
 ```
 
-```
-root@b8e098958ac0:/# mysql -u root -p
+```root@b8e098958ac0:/# mysql -u root -p
 mysql> use database;
 Reading table information for completion of table and column names
 You can turn off this feature to get a quicker startup with -A
@@ -266,27 +166,14 @@ mysql> show tables;
 
 mysql>
 ```
+
 [参考](https://qiita.com/hinako_n/items/f15646ea548bcdc8ac6c)
-
-<!-- ### 設定後、使用例
-
-- コンテナ立ち上げる
-  ```sail up```
-- detachedモード
-  ```sail up -d```
-- コンテナ停止
-  ```sail down```
-- コンテナへ接続
-  ```sail shell```
-- mysqlへlogin(初回rootユーザー)
-  ```sail mysql -uroot```
- -->
 
 ### laravel uiライブラリのインストール
 
 srcディレクトリにて
-```
-laravel % composer require laravel/ui
+
+```laravel % composer require laravel/ui
 Info from https://repo.packagist.org: #StandWithUkraine
 Using version ^3.4 for laravel/ui
 ./composer.json has been created
@@ -299,7 +186,7 @@ Lock file operations: 35 installs, 0 updates, 0 removals
   - Locking doctrine/lexer (1.2.3)
   - Locking egulias/email-validator (3.1.2)
 
-<!-- 略 -->
+~~~~~~~ 略 ~~~~~~~~
 
 23 package suggestions were added by new dependencies, use `composer suggest` to see details.
 Generating autoload files
@@ -307,8 +194,7 @@ Generating autoload files
 Use the `composer fund` command to find out more!
 ```
 
-```
-src % composer require laravel/ui
+```src % composer require laravel/ui
 Info from https://repo.packagist.org: #StandWithUkraine
 Using version ^3.4 for laravel/ui
 ./composer.json has been updated
@@ -332,8 +218,7 @@ No publishable resources for tag [laravel-assets].
 Publishing complete.
 ```
 
-```
-[saki-pro💻@Saki 05/08 21:41]+[mcv]
+```[saki-pro💻@Saki 05/08 21:41]+[mcv]
 src % php artisan ui bootstrap --auth
 Bootstrap scaffolding installed successfully.
 Please run "npm install && npm run dev" to compile your fresh scaffolding.
@@ -346,14 +231,13 @@ Authentication scaffolding generated successfully.
 
 [参考](https://qiita.com/sugasaki/items/ad4d5d88965057840a04)
 
-```
-brew install nodebrew
+```brew install nodebrew
 nodebrew -v
 mkdir -p ~/.nodebrew/src
 nodebrew install-binary latest
 ```
-```
-src % nodebrew install-binary latest
+
+```src % nodebrew install-binary latest
 Fetching: https://nodejs.org/dist/v18.1.0/node-v18.1.0-darwin-x64.tar.gz
 
 src % nodebrew list
@@ -366,37 +250,22 @@ current: v16.14.2
 
 - 再度installコマンド
 
-```
-src % npm install && npm run dev
+```src % npm install && npm run dev
 ⸨########⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⸩ ⠹ idealTree:esrecurse: timing idealTree:node_modules/esrecurse Completed in 3ms
 ~~~~~~~~~~~~~
-
-> dev
-> npm run development
-
-
-> development
-> mix
-
 Additional dependencies must be installed. This will only take a moment.
-
 Running: npm install resolve-url-loader@^5.0.0 --save-dev --legacy-peer-deps
-
 Finished. Please run Mix again.
-
 ```
 
 Running:の箇所のコマンドを実行
 
-```
-npm install resolve-url-loader@^5.0.0 --save-dev --legacy-peer-deps
+```npm install resolve-url-loader@^5.0.0 --save-dev --legacy-peer-deps
 ```
 
 ```npm run dev```
 
-```
-
-~~~~~~~略~~~~~~~~
+```~~~~~~~略~~~~~~~~
 ✔ Compiled Successfully in 10506ms
 ┌───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┬──────────┐
 │                                                                                                                                                              File │ Size     │
@@ -407,10 +276,6 @@ npm install resolve-url-loader@^5.0.0 --save-dev --legacy-peer-deps
 1 WARNING in child compilations (Use 'stats.children: true' resp. '--stats-children' for more details)
 webpack compiled with 1 warning
 ```
-
-
-
-
 
 <!-- 
 
@@ -512,4 +377,5 @@ Route::get('/index', 'App\Http\Controllers\HelloController@index');
 ```
 
 参考:https://qiita.com/yukibe/items/7bab0d596ae9a0930f18
+
  -->
