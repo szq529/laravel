@@ -7,8 +7,12 @@
     <title>hellocontrollerのページ</title>
 </head>
 <body>
-    <h1>Index</h1>
+    {{-- <h1>Index</h1>
     <p>this is Index page</p>
-    <a href="/hello/other">go to <b>other</b> page</a>
+    <a href="/hello/other">go to <b>other</b> page</a> --}}
+    <ul>
+        <li>{{ $request }}</li>
+        <li>{{ $response }}</li>
+    </ul>
 </body>
 </html>

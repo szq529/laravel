@@ -23,8 +23,14 @@ Route::get('/', function () {
 // コントローラーでパラメータを取得
 Route::get('sample/{noname}/{pass?}', [SampleController::class, 'index']);
 
+
+// 基本コントローラー
 Route::get('hello', [HelloController::class, 'index']);
-Route::get('hello/other', [HelloController::class, 'other']);
+
+// シングルアクションのアクション
+// Route::get('hello', HelloController::class);
+
+// Route::get('hello/other', [HelloController::class, 'other']);
 
 Auth::routes();
 
