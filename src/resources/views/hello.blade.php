@@ -12,7 +12,7 @@
     <a href="/hello/other">go to <b>other</b> page</a> --}}
     <ul>
         <li>{{ $request }}</li>
-        <li>{{ $response }}</li>
+        {{-- <li>{{ $response }}</li> --}}
     </ul>
 </body>
 </html>
