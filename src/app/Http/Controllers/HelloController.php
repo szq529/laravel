@@ -2,10 +2,7 @@
 
 namespace App\Http\Controllers;
 
-// use Facade\FlareClient\Http\Response;
-
 use Illuminate\Http\Request;
-// use Illuminate\Http\Response;
 
 class HelloController extends Controller
 {

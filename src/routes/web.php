@@ -12,8 +12,11 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\SampleController;
 use App\Http\Controllers\HelloController;
+use App\Http\Controllers\ValidateController;
+use App\Http\Requests\StorePostRequest;
 use App\Http\Middleware\HelloMiddleware;
 
 Route::get('/', function () {
@@ -28,9 +31,19 @@ Route::get('hello', [HelloController::class, 'index'])->middleware(HelloMiddlewa
 // Route::post('hello', [HelloController::class, 'post']);
 // Route::get('hello/other', [HelloController::class, 'other']);
 
+// validate
+Route::get('validate', [ValidateController::class, 'index']);
+Route::post('validate', function (StorePostRequest $request) {
+    return view('hello.validate_rule', ['msg' => '入力されました!']);
+});
+
+// Model
+// Route::get('model', [ModelController::class, 'index']);
+
+
 //テンプレート表示
 // Route::get('hello',function(){
-//     return view('hello.index');
+    //     return view('hello.index');
 // });
 // Route::get('hello', 'HelloController@index');
 
