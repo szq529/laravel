@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class DatabaseSeeder extends Seeder
 {
@@ -15,6 +16,6 @@ class DatabaseSeeder extends Seeder
     {
         // \App\Models\User::factory(10)->create();
         // 作成したSeederを読み込む指定
-        $this->call(TestsTableSeeder::class);
+        $this->call(HumanTableSeeder::class);
     }
 }

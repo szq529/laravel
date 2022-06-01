@@ -18,6 +18,7 @@ use App\Http\Controllers\HelloController;
 use App\Http\Controllers\ValidateController;
 use App\Http\Requests\StorePostRequest;
 use App\Http\Middleware\HelloMiddleware;
+use App\Http\Controllers\DbController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -25,9 +26,10 @@ Route::get('/', function () {
 
 // 基本コントローラー
 Route::get('hello', [HelloController::class, 'index']);
-Route::get('hello', [HelloController::class, 'index']);
-// ->middleware(HelloMiddleware::class);
+
+// middleware
 Route::get('hello', [HelloController::class, 'index'])->middleware(HelloMiddleware::class);
+// ->middleware(HelloMiddleware::class);
 // Route::post('hello', [HelloController::class, 'post']);
 // Route::get('hello/other', [HelloController::class, 'other']);
 
@@ -37,13 +39,22 @@ Route::post('validate', function (StorePostRequest $request) {
     return view('hello.validate_rule', ['msg' => '入力されました!']);
 });
 
+// db
+Route::get('db', [DbController::class, 'index']);
+Route::get('add', [DbController::class, 'add']);
+Route::post('add', [DbController::class, 'create']);
+// }]);
+// Route::post('db/', function (DbPostRequest $request) {
+//     return view('dbview.db', ['msg' => '入力されました!']);
+// });
+
 // Model
 // Route::get('model', [ModelController::class, 'index']);
 
 
 //テンプレート表示
 // Route::get('hello',function(){
-    //     return view('hello.index');
+//     return view('hello.index');
 // });
 // Route::get('hello', 'HelloController@index');
 
