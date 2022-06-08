@@ -60,9 +60,9 @@ class DbController extends Controller
             'mail' => $request->mail,
             'age' => $request->age,
         ];
-        dd($param);
+        // ddd($param);
         DB::update(
-            'UPDATE human SET name =:name, mail = :mail, age = :age WHERE id = :id',
+            'UPDATE human SET name = :name, mail = :mail, age = :age WHERE id = :id',
             $param
         );
         return redirect('db');

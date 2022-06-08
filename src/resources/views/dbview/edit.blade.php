@@ -18,19 +18,19 @@
     <form action="/db/edit" method="post">
         <table>
             @csrf
-            <input type="hidden" name="id" method="{{$from->id}}">
-            <tr></tr>
+            <input type="hidden" name="id" value="{{$from->id}}">
+            <tr>
                 <th>name:</th>
-                <td><input type="hideen" name="name" value="{{$from->name}}"></td>
+                <td><input type="text" name="name" value="{{$from->name}}"></td>
             </tr>
             <tr>
                 <th>mail:
                 </th>
-                <td><input type="" name="mail" value="{{$from->mail}}"></td>
+                <td><input type="text" name="mail" value="{{$from->mail}}"></td>
             </tr>
             <tr>
                 <th>age:</th>
-                <td><input type="" name="age" value="{{$from->age}}"></td>
+                <td><input type="text" name="age" value="{{$from->age}}"></td>
             </tr>
             <tr>
                 <th>
