@@ -67,4 +67,24 @@ class DbController extends Controller
         );
         return redirect('db');
     }
+
+    // データ取得、削除
+    public function del(Request $request)
+    {
+        $param = ['id' => $request->id];
+        $foo = DB::select('SELECT * FROM human WHERE id = :id', $param);
+        // dd($param);
+        return view('dbview.delete', ['from' => $foo[0]]);
+    }
+
+    public function remove(Request $request)
+    {
+        $param = ['id' => $request->id];
+        // ddd($param);
+        DB::delete(
+            'DELETE FROM human WHERE id = :id',
+            $param
+        );
+        return redirect('db');
+    }
 }

@@ -47,6 +47,10 @@ Route::post('add', [DbController::class, 'create']);
 // 更新
 Route::get('db/edit', [DbController::class, 'edit']);
 Route::post('db/edit', [DbController::class, 'update']);
+
+// 削除
+Route::get('db/delete', [DbController::class, 'del']);
+Route::post('db/delete', [DbController::class, 'remove']);
 // }]);
 // Route::post('db/', function (DbPostRequest $request) {
 //     return view('dbview.db', ['msg' => '入力されました!']);
