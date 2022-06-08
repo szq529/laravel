@@ -47,7 +47,7 @@ class DbController extends Controller
     public function edit(Request $request)
     {
         $param = ['id' => $request->id];
-        $foo = DB::select('select * from human where id = :id', $param);
+        $foo = DB::select('SELECT * FROM human WHERE id = :id', $param);
         // dd($param);
         return view('dbview.edit', ['from' => $foo[0]]);
     }
@@ -60,13 +60,9 @@ class DbController extends Controller
             'mail' => $request->mail,
             'age' => $request->age,
         ];
-        // dd($param);
+        dd($param);
         DB::update(
-            'update human set
-             name = :name,
-             mail = :mail,
-             age = :age
-             where id = :id',
+            'UPDATE human SET name =:name, mail = :mail, age = :age WHERE id = :id',
             $param
         );
         return redirect('db');
