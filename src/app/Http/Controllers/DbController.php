@@ -15,10 +15,29 @@ class DbController extends Controller
             $param = ['id' => $request->id];
             $foo = DB::select('select * from human where id = :id', $param);
         } else {
-            $foo = DB::select('select * from human');
+            // $foo = DB::select('select * from human');
+            // $foo = DB::table('human')->get(); //クエリビルダ使用
+            $foo = DB::table('human')->orderBy('age', 'asc')->get();
         }
-        // $foo = DB::select('select * from human');
         return view('dbview.db', ['foo' => $foo]);
+    }
+
+    //詳細
+    public function show(Request $request)
+    {
+        $page = $request->page;
+        $foos = DB::table('human')
+            ->offset($page * 3)
+            ->limit(3)
+            ->get();
+        // $id = $request->id;
+        // $foos = DB::table('human')->where('id', '<=', $id)->get(); //クエリビルダ使用
+        // dd($foo);
+        // $min = $request->min;
+        // $max = $request->max;
+        // $foos = DB::table('human')->whereRaw('age >= ? and age <= ?', [$min, $max])->get();
+        // // ddd($foos);
+        return view('dbview.show', ['foos' => $foos]);
     }
 
     public function add(Request $request)
@@ -34,12 +53,13 @@ class DbController extends Controller
             'mail' => $request->mail,
             'age' => $request->age,
         ];
-        DB::insert(
-            'insert into
-        human (name, mail, age)
-        values(:name, :mail, :age)',
-            $param
-        );
+        DB::table('human')->insert($param);
+        // DB::insert(
+        //     'insert into
+        // human (name, mail, age)
+        // values(:name, :mail, :age)',
+        //     $param
+        // );
         return redirect('db');
     }
 

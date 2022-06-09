@@ -44,6 +44,9 @@ Route::get('db', [DbController::class, 'index']);
 Route::get('add', [DbController::class, 'add']);
 Route::post('add', [DbController::class, 'create']);
 
+// 詳細
+Route::get('db/show', [DbController::class, 'show']);
+
 // 更新
 Route::get('db/edit', [DbController::class, 'edit']);
 Route::post('db/edit', [DbController::class, 'update']);
