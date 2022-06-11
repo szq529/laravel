@@ -21,22 +21,19 @@ class ItemFactory extends Factory
      */
     public function definition()
     {
-        //item
-        // $id'->increments('id'),
-        $category = ['funde', 'rip', 'mascara', 'eyebrow'];
-        $color = ['red', 'green', 'blue', 'black'];
-        $parts = ['face', 'eye', 'hand'];
-        // $purchase = implode([]);
-        // $update_at = false;
-        // $created_at = [];
-
-        $category = $category[rand(0, count($category) - 1)];
-        $color = $color[rand(0, count($color) - 1)];
-        $parts = $parts[rand(0, count($parts) - 1)];
+        // $category = ['funde', 'rip', 'mascara', 'eyebrow'];
+        // $color = ['red', 'green', 'blue', 'black'];
+        // $parts = ['face', 'eye', 'hand'];
+        //  ---------------------------------------
+        // $category = $category[rand(0, count($category) - 1)];
+        // $color = $color[rand(0, count($color) - 1)];
+        // $parts = $parts[rand(0, count($parts) - 1)];
+        //  ---------------------------------------
         return [
-            'category' => $category,
-            'color' => $color,
-            'parts' => $parts,
+            // 'カラム名' => 設定したい値,
+            'category' => $this->faker->text,
+            'color' => $this->faker->safecolorName,
+            'parts' => $this->faker->text,
             'purchase_date' => now(),
         ];
     }

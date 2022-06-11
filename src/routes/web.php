@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\SampleController;
 use App\Http\Controllers\HelloController;
 use App\Http\Controllers\ValidateController;
+use App\Http\Controllers\ItemController;
 use App\Http\Requests\StorePostRequest;
 use App\Http\Middleware\HelloMiddleware;
 use App\Http\Controllers\DbController;
@@ -56,8 +57,10 @@ Route::get('db/delete', [DbController::class, 'del']);
 Route::post('db/delete', [DbController::class, 'remove']);
 // }]);
 // Route::post('db/', function (DbPostRequest $request) {
-//     return view('dbview.db', ['msg' => '入力されました!']);
-// });
+    //     return view('dbview.db', ['msg' => '入力されました!']);
+    // });
+
+Route::get('item', [ItemController::class, 'index']);
 
 // Model
 // Route::get('model', [ModelController::class, 'index']);
@@ -65,13 +68,13 @@ Route::post('db/delete', [DbController::class, 'remove']);
 
 //テンプレート表示
 // Route::get('hello',function(){
-//     return view('hello.index');
-// });
-// Route::get('hello', 'HelloController@index');
+    //     return view('hello.index');
+    // });
+    // Route::get('hello', 'HelloController@index');
 
-// ルートパラメータを設定する
-// コントローラーでパラメータを取得
-Route::get('sample/{noname}/{pass?}', [SampleController::class, 'index']);
+    // ルートパラメータを設定する
+    // コントローラーでパラメータを取得
+    Route::get('sample/{noname}/{pass?}', [SampleController::class, 'index']);
 
 
 // シングルアクションのアクション
