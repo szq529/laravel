@@ -67,9 +67,10 @@ class DbController extends Controller
     public function edit(Request $request)
     {
         $param = ['id' => $request->id];
-        $foo = DB::select('SELECT * FROM human WHERE id = :id', $param);
+        $foo = DB::table('human')->where('id', $request->id)->first();
+        // DB::select('SELECT * FROM human WHERE id = :id', $param);
         // dd($param);
-        return view('dbview.edit', ['from' => $foo[0]]);
+        return view('dbview.edit', ['from' => $foo]);
     }
 
     public function update(Request $request)
@@ -81,8 +82,8 @@ class DbController extends Controller
             'age' => $request->age,
         ];
         // ddd($param);
-        DB::update(
-            'UPDATE human SET name = :name, mail = :mail, age = :age WHERE id = :id',
+        DB::table('human')->where('id', $request->id)->update(
+            // 'UPDATE human SET name = :name, mail = :mail, age = :age WHERE id = :id',
             $param
         );
         return redirect('db');
@@ -91,20 +92,20 @@ class DbController extends Controller
     // データ取得、削除
     public function del(Request $request)
     {
-        $param = ['id' => $request->id];
-        $foo = DB::select('SELECT * FROM human WHERE id = :id', $param);
+        // $param = ['id' => $request->id];
+        $foo = DB::table('human')->where('id', $request->id)->first();
+        // ('SELECT * FROM human WHERE id = :id', $param);
         // dd($param);
-        return view('dbview.delete', ['from' => $foo[0]]);
+        return view('dbview.delete', ['from' => $foo]);
     }
 
     public function remove(Request $request)
     {
         $param = ['id' => $request->id];
         // ddd($param);
-        DB::delete(
-            'DELETE FROM human WHERE id = :id',
-            $param
-        );
+        DB::table('human')->where('id', $request->id)->delete();
+        // ('DELETE FROM human WHERE id = :id',
+        //     $param);
         return redirect('db');
     }
 }
