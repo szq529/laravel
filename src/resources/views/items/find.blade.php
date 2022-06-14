@@ -6,25 +6,23 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>items</title>
+    <title>find</title>
 </head>
 <body>
-    <h1>items</h1>
+    <h1>find</h1>
     @section('content')
         <table>
-            @csrf
-            {{-- <p>{{$msg}}</p> --}}
-            <tr><th>Date</th></tr>
-            @foreach ($items as $item)
+            <form action="/item/find" method="POST">
+                @csrf
+                <input type="text" name="input" value="{{$input}}">
+                <input type="submit" value="find">
+            </form>
+            @@if (insset($item))
+                <tr><th>find</th></tr>
                 <tr>
                     <th>{{$item->getData()}}</th>
-                    {{-- <td></td>
-                    <th>{{$item->category}}</th>
-                    <th></th>
-                    <th>{{$item->color}}</th>
-                    <td></td> --}}
                 </tr>
-            @endforeach
+            @@endif
         </table>
     @endsection
     @section('footer')

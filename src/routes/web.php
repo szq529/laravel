@@ -57,10 +57,12 @@ Route::get('db/delete', [DbController::class, 'del']);
 Route::post('db/delete', [DbController::class, 'remove']);
 // }]);
 // Route::post('db/', function (DbPostRequest $request) {
-    //     return view('dbview.db', ['msg' => '入力されました!']);
-    // });
+//     return view('dbview.db', ['msg' => '入力されました!']);
+// });
 
 Route::get('item', [ItemController::class, 'index']);
+Route::get('item/find', [ItemController::class, 'find']);
+Route::post('item/find', [ItemController::class, 'search']);
 
 // Model
 // Route::get('model', [ModelController::class, 'index']);
@@ -68,13 +70,13 @@ Route::get('item', [ItemController::class, 'index']);
 
 //テンプレート表示
 // Route::get('hello',function(){
-    //     return view('hello.index');
-    // });
-    // Route::get('hello', 'HelloController@index');
+//     return view('hello.index');
+// });
+// Route::get('hello', 'HelloController@index');
 
-    // ルートパラメータを設定する
-    // コントローラーでパラメータを取得
-    Route::get('sample/{noname}/{pass?}', [SampleController::class, 'index']);
+// ルートパラメータを設定する
+// コントローラーでパラメータを取得
+Route::get('sample/{noname}/{pass?}', [SampleController::class, 'index']);
 
 
 // シングルアクションのアクション
