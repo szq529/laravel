@@ -24,7 +24,7 @@ class ItemController extends Controller
         return view('items.find', ['input' => '']);
     }
 
-    public function search(Requset $request)
+    public function search(Request $request)
     {
         $item = Item::find($request->input);
         $param = ['input' => $request->input, 'item' => $item];

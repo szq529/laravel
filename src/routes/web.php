@@ -60,6 +60,8 @@ Route::post('db/delete', [DbController::class, 'remove']);
 //     return view('dbview.db', ['msg' => '入力されました!']);
 // });
 
+
+// item table
 Route::get('item', [ItemController::class, 'index']);
 Route::get('item/find', [ItemController::class, 'find']);
 Route::post('item/find', [ItemController::class, 'search']);

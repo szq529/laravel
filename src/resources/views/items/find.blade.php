@@ -10,20 +10,20 @@
 </head>
 <body>
     <h1>find</h1>
-    @section('content')
-        <table>
+            @section('content')
             <form action="/item/find" method="POST">
                 @csrf
                 <input type="text" name="input" value="{{$input}}">
                 <input type="submit" value="find">
             </form>
-            @@if (insset($item))
-                <tr><th>find</th></tr>
-                <tr>
-                    <th>{{$item->getData()}}</th>
-                </tr>
-            @@endif
-        </table>
+            @if (!isset($param))
+                <table>
+                    <tr><th>find</th></tr>
+                    <tr>
+                        <th>{{$item->getData()}}</th>
+                    </tr>
+                </table>
+            @endif
     @endsection
     @section('footer')
     copyright ~~~~

@@ -13,7 +13,7 @@ class Item extends Model
     // protected $table = 'items';
     public function getData()
     {
-        //     $items = Item::all();
+            // $items = Item::all();
         return $this->id . ':' . $this->category . '(' . $this->color  . ')';
     }
 }
