@@ -26,7 +26,15 @@ class ItemController extends Controller
 
     public function search(Request $request)
     {
-        $item = Item::find($request->input);
+        // requestされたidを取得する
+        // $item = Item::find($request->input);
+
+        // 値を取得する
+        // $item = Item::where('フィールド',値);
+        // $item = Item::where('color', $request->input)->first();
+
+        // scopeNameEqualを設定、使用
+        $item = Item::colorEqual($request->input)->first();
         $param = ['input' => $request->input, 'item' => $item];
         // dd($param);
         return view('items.find', $param);

@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use App\Models\Human;
 
 class HumanTableSeeder extends Seeder
 {
@@ -14,12 +15,13 @@ class HumanTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('human')->insert([
-            'id' => '4',
-            'name' => 'さき',
-            'mail' => 'ddfsdf' . '@gmail.com',
-            'age' => '23',
-            // 'timestamps' => new DateTime,
-        ]);
+        Human::factory()->count(10)->create();
+        // DB::table('human')->insert([
+        //     'id' => '4',
+        //     'name' => 'さき',
+        //     'mail' => 'ddfsdf' . '@gmail.com',
+        //     'age' => '23',
+        //     // 'timestamps' => new DateTime,
+        // ]);
     }
 }

@@ -2,7 +2,8 @@
 
 namespace Database\Seeders;
 
-// use Database\Factories\ItemFactory;
+use App\Models\Human;
+use Database\Factories\ItemFactory;
 use Illuminate\Database\Seeder;
 use App\Models\Item;
 
@@ -22,5 +23,8 @@ class DatabaseSeeder extends Seeder
         // $this->call(HumanTableSeeder::class);
         // Item::factory()->count(5)->create();
         // $this->call(ItemFactory::class);
+
+
+        Human::factory()->count(5)->create();
     }
 }
