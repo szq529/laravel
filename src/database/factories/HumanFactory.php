@@ -24,7 +24,7 @@ class HumanFactory extends Factory
         return [
             // 'カラム名' => 設定したい値,
             'name' => $this->faker->name(),
-            'email' => $this->faker->unique()->safeEmail(),
+            'mail' => $this->faker->unique()->safeEmail(),
             'age' => rand(1, 99)
         ];
     }

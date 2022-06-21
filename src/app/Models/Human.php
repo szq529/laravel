@@ -8,4 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class Human extends Model
 {
     use HasFactory;
+    // protected $table = 'Humans';
+    // protected $fillable = ['id'];
 }

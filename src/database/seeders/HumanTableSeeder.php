@@ -15,7 +15,9 @@ class HumanTableSeeder extends Seeder
      */
     public function run()
     {
-        Human::factory()->count(10)->create();
+
+        // Human::factory()->count(5)->create();
+        // $this->call(HumanTableSeeder::class);
         // DB::table('human')->insert([
         //     'id' => '4',
         //     'name' => 'さき',

@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Human;
 use Database\Factories\ItemFactory;
+use Database\Factories\HumanFactory;
 use Illuminate\Database\Seeder;
 use App\Models\Item;
 
@@ -18,13 +19,10 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // \App\Models\User::factory(10)->create();
         // 作成したSeederを読み込む指定
-        // $this->call(HumanTableSeeder::class);
+        // \App\Models\User::factory(10)->create();
         // Item::factory()->count(5)->create();
-        // $this->call(ItemFactory::class);
-
-
         Human::factory()->count(5)->create();
+        $this->call(HumanTableSeeder::class);
     }
 }
