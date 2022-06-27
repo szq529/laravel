@@ -17,13 +17,9 @@ class Item extends Model
         return $this->id . ':' . $this->category . '(' . $this->color  . ')';
     }
 
-    // public function scopeColorEqual($query, $str)
-    // {
-    //     return $query->where('color', $str);
-    // }
-
-    // public function scopeColorEqual($query, $str)
-    // {
-    //     return $query->where('color', $str);
-    // }
+    // ローカルスコープを設定
+    public function scopeColorEqual($query, $str)
+    {
+        return $query->where('color', $str);
+    }
 }

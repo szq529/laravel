@@ -14,11 +14,11 @@ class ItemController extends Controller
         return view('items.index', ['items' => $items]);
     }
 
-    // public function getData()
-    // {
-    //     //     $items = Item::all();
-    //     return $this->id . ':' . $this->name . '(' . $this->age  . ')';
-    // }
+    public function getData()
+    {
+        //     $items = Item::all();
+        return $this->id . ':' . $this->name . '(' . $this->age  . ')';
+    }
     public function find(Request $request)
     {
         return view('items.find', ['input' => '']);
@@ -33,7 +33,7 @@ class ItemController extends Controller
         // $item = Item::where('フィールド',値);
         // $item = Item::where('color', $request->input)->first();
 
-        // scopeNameEqualを設定、使用
+        // model内のscopeNameEqualを設定、使用
         $item = Item::colorEqual($request->input)->first();
         $param = ['input' => $request->input, 'item' => $item];
         // dd($param);

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-
+use App\Models\Human;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\RedirectResponse;
@@ -26,7 +26,7 @@ class DbController extends Controller
     public function show(Request $request)
     {
         $page = $request->page;
-        $foos = DB::table('human')
+        $foos = DB::table('humans')
             ->offset($page * 3)
             ->limit(3)
             ->get();
@@ -107,5 +107,32 @@ class DbController extends Controller
         // ('DELETE FROM human WHERE id = :id',
         //     $param);
         return redirect('db');
+    }
+
+    public function getData()
+    {
+        //     $items = Item::all();
+        return $this->id . ':' . $this->name . '(' . $this->age  . ')';
+    }
+
+    public function find(Request $request)
+    {
+        return view('dbview.find', ['input' => '']);
+    }
+
+    public function search(Request $request)
+    {
+        // requestされたidを取得する
+        // $item = Item::find($request->input);
+
+        // 値を取得する
+        // $item = Item::where('フィールド',値);
+        // $item = Item::where('color', $request->input)->first();
+
+        // model内のidEqualを設定、使用
+        $human = Human::idEqual($request->input)->first();
+        $param = ['input' => $request->input, 'id' => $human];
+        // dd($param);
+        return view('dbview.find', $param);
     }
 }
