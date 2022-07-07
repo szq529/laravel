@@ -9,14 +9,14 @@
     <title>find</title>
 </head>
 <body>
-    <h1>find</h1>
+    <h1>Itemfind</h1>
             @section('content')
             <form action="/item/find" method="POST">
                 @csrf
                 <input type="text" name="input" value="{{$input}}">
                 <input type="submit" value="find">
             </form>
-            @if (!isset($param))
+            @if (isset($param))
                 <table>
                     <tr><th>find</th></tr>
                     <tr>

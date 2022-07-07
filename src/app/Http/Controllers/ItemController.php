@@ -14,11 +14,6 @@ class ItemController extends Controller
         return view('items.index', ['items' => $items]);
     }
 
-    public function getData()
-    {
-        //     $items = Item::all();
-        return $this->id . ':' . $this->name . '(' . $this->age  . ')';
-    }
     public function find(Request $request)
     {
         return view('items.find', ['input' => '']);
@@ -27,14 +22,14 @@ class ItemController extends Controller
     public function search(Request $request)
     {
         // requestされたidを取得する
-        // $item = Item::find($request->input);
+        $item = Item::find($request->input);
 
         // 値を取得する
         // $item = Item::where('フィールド',値);
-        // $item = Item::where('color', $request->input)->first();
+        $item = Item::where('color', $request->input)->first()->get();
 
         // model内のscopeNameEqualを設定、使用
-        $item = Item::colorEqual($request->input)->first();
+        // $item = Item::colorEqual($request->input)->first();
         $param = ['input' => $request->input, 'item' => $item];
         // dd($param);
         return view('items.find', $param);

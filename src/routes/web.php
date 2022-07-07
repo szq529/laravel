@@ -20,6 +20,7 @@ use App\Http\Controllers\ItemController;
 use App\Http\Requests\StorePostRequest;
 use App\Http\Middleware\HelloMiddleware;
 use App\Http\Controllers\DbController;
+use App\Http\Controllers\HumanController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -47,7 +48,9 @@ Route::post('add', [DbController::class, 'create']);
 
 // 詳細
 Route::get('db/show', [DbController::class, 'show']);
-Route::get('db/find', [DbController::class, 'find']);
+
+// scope
+Route::get('db/find', [HumanController::class, 'index']);
 Route::post('db/find', [DbController::class, 'search']);
 
 // 更新

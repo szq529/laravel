@@ -10,20 +10,24 @@
 </head>
 <body>
     <h1>find</h1>
-            @section('content')
-            <form action="/db/find" method="POST">
+    @section('content')
+            {{-- <form action="/db/find" method="post">
                 @csrf
-                <input type="text" name="input" value="{{$input}}">
+                <input type="text" name="input">
                 <input type="submit" value="find">
-            </form>
-            @if (!isset($param))
-                <table>
-                    <tr><th>find</th></tr>
-                    <tr>
-                        <th>{{$human->getData()}}</th>
-                    </tr>
-                </table>
-            @endif
+            </form> --}}
+                    <table>
+                        @foreach($humans as $human)
+                        <tr>
+                            <th>
+                                {{$human -> id}}
+                                <td>
+                                {{$human -> name}}
+                                </td>
+                            </th>
+                        </tr>
+                        @endforeach
+                    </table>
     @endsection
     @section('footer')
     copyright ~~~~

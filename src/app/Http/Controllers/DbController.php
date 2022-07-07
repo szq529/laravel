@@ -17,7 +17,7 @@ class DbController extends Controller
         } else {
             // $foo = DB::select('select * from human');
             // $foo = DB::table('human')->get(); //クエリビルダ使用
-            $foo = DB::table('human')->orderBy('age', 'asc')->get();
+            $foo = DB::table('humans')->orderBy('age', 'asc')->get();
         }
         return view('dbview.db', ['foo' => $foo]);
     }
@@ -53,7 +53,7 @@ class DbController extends Controller
             'mail' => $request->mail,
             'age' => $request->age,
         ];
-        DB::table('human')->insert($param);
+        DB::table('humans')->insert($param);
         // DB::insert(
         //     'insert into
         // human (name, mail, age)
@@ -67,8 +67,8 @@ class DbController extends Controller
     public function edit(Request $request)
     {
         $param = ['id' => $request->id];
-        $foo = DB::table('human')->where('id', $request->id)->first();
-        // DB::select('SELECT * FROM human WHERE id = :id', $param);
+        $foo = DB::table('humans')->where('id', $request->id)->first();
+        // DB::select('SELECT * FROM humans WHERE id = :id', $param);
         // dd($param);
         return view('dbview.edit', ['from' => $foo]);
     }
@@ -82,7 +82,7 @@ class DbController extends Controller
             'age' => $request->age,
         ];
         // ddd($param);
-        DB::table('human')->where('id', $request->id)->update(
+        DB::table('humans')->where('id', $request->id)->update(
             // 'UPDATE human SET name = :name, mail = :mail, age = :age WHERE id = :id',
             $param
         );
@@ -93,7 +93,7 @@ class DbController extends Controller
     public function del(Request $request)
     {
         // $param = ['id' => $request->id];
-        $foo = DB::table('human')->where('id', $request->id)->first();
+        $foo = DB::table('humans')->where('id', $request->id)->first();
         // ('SELECT * FROM human WHERE id = :id', $param);
         // dd($param);
         return view('dbview.delete', ['from' => $foo]);
@@ -103,36 +103,35 @@ class DbController extends Controller
     {
         $param = ['id' => $request->id];
         // ddd($param);
-        DB::table('human')->where('id', $request->id)->delete();
+        DB::table('humans')->where('id', $request->id)->delete();
         // ('DELETE FROM human WHERE id = :id',
         //     $param);
         return redirect('db');
     }
 
-    public function getData()
-    {
-        //     $items = Item::all();
-        return $this->id . ':' . $this->name . '(' . $this->age  . ')';
-    }
 
     public function find(Request $request)
     {
-        return view('dbview.find', ['input' => '']);
+        return view('dbview.find');
     }
 
     public function search(Request $request)
     {
         // requestされたidを取得する
-        // $item = Item::find($request->input);
+        $human = Human::find($request->input)->get();
 
         // 値を取得する
-        // $item = Item::where('フィールド',値);
-        // $item = Item::where('color', $request->input)->first();
+        // 例：$item = Item::where('フィールド',値);
+        $human = Human::where('id', $request->input)->first();
 
-        // model内のidEqualを設定、使用
-        $human = Human::idEqual($request->input)->first();
+        // model内のIdEqualを設定、使用
+        // $human = Human::idEqual($request->input)->first();
         $param = ['input' => $request->input, 'id' => $human];
         // dd($param);
-        return view('dbview.find', $param);
+        return view('dbview.find', ['param' => $param]);
     }
+
+    // public function getData()
+    // {
+    // }
 }

@@ -24,24 +24,6 @@
                     <th>{{$foo->age}}</th>
                     <td></td>
                 </tr>
-                <tr>
-                    <th></th>
-                    <td></td>
-                    <th></th>
-                    <td></td>
-                </tr>
-                <tr>
-                    <th></th>
-                    <td></td>
-                    <th></th>
-                    <td></td>
-                </tr>
-                <tr>
-                    <th></th>
-                    <td></td>
-                    <th></th>
-                    <td></td>
-                </tr>
             @endforeach
         </table>
     @endsection
