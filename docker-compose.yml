@@ -1,23 +1,6 @@
 version: "3.9"
 
 services:
-    # laravel.test:
-    #     build:
-    #         context: ./vendor/laravel/sail/runtimes/7.4
-    #         #   dockerfile: Dockerfile
-    #         # args:
-    #         #     WWWGROUP: "${WWWGROUP}"
-    #     image: sail-7.4/app
-    #     # extra_hosts:
-    #     #     - "host.docker.internal:host-gateway"
-    #     # ports:
-    #     #     - "${APP_PORT:-80}:88"
-    #     volumes:
-    #         - ".:/var/www/html"
-    #     # networks:
-    #     #     - sail
-    #     depends_on:
-    #         - mysql
     app:
         # php コンテナ
         build:
@@ -31,7 +14,7 @@ services:
             context: .
             dockerfile: ./docker/web/Dockerfile
         ports:
-            - 8000:80
+            - 8080:80
         depends_on:
             - app
         volumes:
@@ -51,18 +34,5 @@ services:
             TZ: 'Asia/Tokyo'
         volumes:
             - mysql-volume:/var/lib/mysql
-            - ./docker/db/my.cnf:/etc/mysql/conf.d/my.cnf
-    phpmyadmin:
-        # Docker Hubからイメージをダウンロード
-        image: phpmyadmin/phpmyadmin
-        # コンテナと他のサービスを繋げる
-        links:
-            - db
-        ports:
-            - 8888:80
-        # セッション情報をボリュームに設定して永続化
-        volumes:
-            - ./docker/phpmyadmin/sessions:/sessions
-
 volumes:
     mysql-volume:
